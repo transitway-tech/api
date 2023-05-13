@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/stripe/stripe-go/v74"
 )
 
@@ -21,6 +22,10 @@ func main() {
   app := fiber.New()
 
   stripe.Key = env.StripeKey
+
+  app.Use(cors.New(cors.Config{
+    AllowOrigins: "*",
+  }))
 
   db.InitDB()
   db.InitCache(RedisOptions)
