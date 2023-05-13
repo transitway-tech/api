@@ -10,6 +10,8 @@ import (
 
 	sj "github.com/brianvoe/sjwt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/stripe/stripe-go/v74"
+	"github.com/stripe/stripe-go/v74/customer"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -93,6 +95,24 @@ func (account *Account) Create() error {
   _, err := db.Accounts.InsertOne(ctx, account)
 
   return err
+}
+
+func (account *Account) CreateStripeCustomer() error {
+  fullName := account.LastName + " " + account.FirstName
+
+  // creating a stripe account
+  params := &stripe.CustomerParams {
+    Phone: &account.Phone,
+    Name: &fullName,
+  }
+  c, err := customer.New(params)
+
+  if err != nil {
+    return err
+  }
+
+  account.StripeCustomerID = c.ID
+  return nil
 }
 
 func UpdateAccount(id string, updates interface {}) error {

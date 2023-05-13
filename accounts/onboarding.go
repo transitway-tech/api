@@ -77,6 +77,7 @@ func onboarding(acc fiber.Router) {
       account.ID,
       bson.M {
         "phone": phone,
+        // "stripeCustomerID": account.StripeCustomerID,
       },
     )
     if err != nil {
@@ -104,21 +105,29 @@ func onboarding(acc fiber.Router) {
     account := models.Account{} 
     utils.GetLocals(c, "account", &account)
 
+    // update local account with name
+    account.FirstName = firstName
+    account.LastName = lastName
+
+    err := account.CreateStripeCustomer()
+    if err != nil {
+      return utils.MessageError(c, "Nu s-a putut verifica")
+    }
+
     // update account with name
-    err := models.UpdateAccount(
+    err = models.UpdateAccount(
       account.ID,
       bson.M {
         "firstName": firstName,
         "lastName": lastName,
+        "stripeCustomerID": account.StripeCustomerID,
       },
     )
     if err != nil {
       return utils.MessageError(c, "Eroare")
     }
 
-    // update local account with name
-    account.FirstName = firstName
-    account.LastName = lastName
+  
 
     // generating the account token
     token := account.GenAccountToken()

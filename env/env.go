@@ -13,3 +13,6 @@ var JWTKey = []byte("yomamasodumbshetriedtoclimbmountaindew")
 
 // mongodb
 var MongoURI = "mongodb+srv://stevensun:stevensun@dev.cgvleq5.mongodb.net/test"
+
+// stripe
+var StripeKey = "sk_test_51N7GUIA57ELnbsBvgPsw8g6B9XhBkaku6vbbsez7lstoA58iV76NlYM581qSaM3Mpj5X4ymA6TJhPmlb83f7nl3m00ahVtVJ6O"

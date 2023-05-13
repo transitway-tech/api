@@ -3,10 +3,12 @@ package main
 import (
 	"api/accounts"
 	"api/db"
+	"api/env"
 	"api/tickets"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
+	"github.com/stripe/stripe-go/v74"
 )
 
 var RedisOptions *redis.Options = &redis.Options {
@@ -17,6 +19,8 @@ var RedisOptions *redis.Options = &redis.Options {
 
 func main() {
   app := fiber.New()
+
+  stripe.Key = env.StripeKey
 
   db.InitDB()
   db.InitCache(RedisOptions)
