@@ -3,6 +3,7 @@ package main
 import (
 	"api/accounts"
 	"api/db"
+	"api/tickets"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
@@ -25,6 +26,7 @@ func main() {
   })
 
   accounts.Routes(app)
+  tickets.Routes(app)
 
   app.Listen(":4200")
 }

@@ -7,15 +7,19 @@ import (
 )
 
 type TicketType struct {
+  ID string `bson:"id" json:"id"`
   Name string `bson:"name" json:"name"`
+  Category string `bson:"category" json:"category"`
   Fare float64 `bson:"fare" json:"fare"`
   City string `bson:"city" json:"city"`
   NoLines int `bson:"noLines" json:"noLines"`
   Expiry string `bson:"expiry" json:"expiry"`
 }
 
-func GetTicketTypes() ([]TicketType, error) {
-    cursor, err := db.Tickets.Find(ctx, bson.M{})
+func GetTicketTypes(city string) ([]TicketType, error) {
+    cursor, err := db.TicketTypes.Find(ctx, bson.M{
+      "city": city,
+    })
 
     if err != nil {
       return []TicketType {}, err
@@ -29,4 +33,17 @@ func GetTicketTypes() ([]TicketType, error) {
     }
 
     return ticketTypes, err
+}
+
+func GetTicketType(id string) (TicketType, error) {
+  var ticketType TicketType
+
+  err := db.TicketTypes.FindOne(
+    ctx, 
+    bson.M {
+      "id": id,
+    },
+  ).Decode(&ticketType)
+
+  return ticketType, err
 }

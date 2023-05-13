@@ -18,9 +18,8 @@ var Client *mongo.Client
 
 var Accounts *mongo.Collection
 var Balances *mongo.Collection
-var IssuanceRequests *mongo.Collection
-var Cards *mongo.Collection
 var Tickets *mongo.Collection
+var TicketTypes *mongo.Collection
 var Subscriptions *mongo.Collection
 var Issuers *mongo.Collection
 var Lines *mongo.Collection
@@ -43,9 +42,8 @@ func InitDB() {
   // loading collections
   Accounts = GetCollection("accounts", Client)
   Balances = GetCollection("balances", Client)
-  IssuanceRequests = GetCollection("issuanceRequests", Client)
-  Cards = GetCollection("cards", Client)
   Tickets = GetCollection("tickets", Client)
+  TicketTypes = GetCollection("ticketTypes", Client)
   Subscriptions = GetCollection("subscriptions", Client)
   Issuers = GetCollection("issuers", Client)
   Lines = GetCollection("lines", Client)

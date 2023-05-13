@@ -5,6 +5,7 @@ import (
 	"api/models"
 	"api/utils"
 	"encoding/json"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -20,6 +21,7 @@ func onboarding(acc fiber.Router) {
     phone := body["phone"]
 
     exists, account := models.CheckAccount(phone)
+    fmt.Println(account)
 
     // generating code
     code := utils.GenCode(4)
